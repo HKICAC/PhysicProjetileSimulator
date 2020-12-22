@@ -64,19 +64,44 @@ function init(){
 
 
 
+//create an velocity component
+function Velocity(x0,y0,vx,vy){ //idk how to change sphere.position.y intial position
+    this.x0=x0;
+    this.y0=y0;
+    this.vx=vx;
+    this.vy=vy;
+    //sphere.position.set(v0,y0,0)
+}
+
+var ball; //this is a velocity object
+
+function maxHeight(){
+    v0 = document.getElementById("v0").value;
+    y0 = document.getElementById("y0").value;
+    var theta = document.getElementById("theta").value * Math.PI/180;
+    vy = Math.sin(theta) * v0; //calculate vy
+    vx = Math.cos(theta)*v0; //calculate vx
+    var t = vy / 9.8
+    var yf = Number.parseFloat((y0 + vy * t + 1 / 2 * 9.8 * t * t)).toPrecision(4);
+    document.getElementById("yf").value = +yf;
+    ball=new Velocity(v0,y0,vx,vy); //put values in ball object
+}
+
 function display(){
 
 
     // Rotate our mesh.
-    if (sphere.position.y > -0.1) {
+    const groundHeight=-1.2
+    if (sphere.position.y > groundHeight) { //if above ground
         requestAnimationFrame(display); // Tells the browser to smoothly render at 60Hz
         //sphere.rotation.x += 0.01;
+        ball.vy-=9.8/100;
         sphere.rotation.z += 0.02;
-        sphere.position.x -= 0.1;
-        sphere.position.y -= 0.02;
+        sphere.position.x -= ball.vx/100;
+        sphere.position.y += ball.vy/100;
     } else {
-        sphere.position.x = 1;
-        sphere.position.y = 0;
+        //sphere.position.x = 1;
+        sphere.position.y = groundHeight;
     }
     // Draw the scene from the perspective of the camera.
     renderer.render(scene, camera);
@@ -85,13 +110,3 @@ function display(){
 // When the page has loaded, run init();
 window.onload = init;
 
-function maxHeight(){
-    var v0 = document.getElementById("v0").value;
-    var y0 = document.getElementById("y0").value;
-    var theta = document.getElementById("theta").value * Math.PI/180;
-    var vy = Math.sin(theta) * v0;
-    var t = vy / 9.8
-    var yf = Number.parseFloat((y0 + vy * t + 1 / 2 * 9.8 * t * t)).toPrecision(4);
-    document.getElementById("yf").value = +yf;
-    //alert("yf="+yf);
-}
