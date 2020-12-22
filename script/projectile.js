@@ -78,16 +78,26 @@ function Velocity(x0,y0,vx,vy){
 }
 
 function maxHeight(){
-    var v0 = document.getElementById("v0").value;
-    var y0 = document.getElementById("y0").value;
+    var v0 = parseFloat(document.getElementById("v0").value);
+    var y0 = parseFloat(document.getElementById("y0").value); //need a default value if y0 no input
+    console.log(y0);
     var theta = document.getElementById("theta").value * Math.PI/180;
     var vy = Math.sin(theta) * v0; //calculate vy
+        console.log("vy: "+vy);
     var vx = Math.cos(theta) * v0; //calculate vx
-    var t = 2 * vy / 9.8;
-    var xf = Number.parseFloat((vx * t)).toPrecision(4);
-    var yf = Number.parseFloat((y0 + vy * t + 1 / 2 * 9.8 * t * t)).toPrecision(4);
-    document.getElementById("yf").value = +yf;
-    document.getElementById("xf").value = -xf;
+    var t = vy / 9.8;
+    var tf =(-vy-Math.sqrt(vy*vy+2*9.8*y0))/-9.8;
+    console.log(Math.sqrt(9));
+    var xf = Number.parseFloat((vx * tf + 1 / 2 * 9.8 * tf * tf)).toPrecision(4);
+    var ym = Number.parseFloat(y0 + vy * t + 1 / 2 * 9.8 * t * t).toPrecision(4);
+    document.getElementById("ym").value = ym;
+    document.getElementById("xf").value = xf;
+    vy/=2;
+    vx/=2;
+    if(vy>100){
+        vy/=5;
+        vx/=5;
+    }
     ball = new Velocity(v0,y0,vx,vy); // put values in ball object
 }
 
@@ -97,15 +107,16 @@ function display() {
     if (sphere.position.y > groundHeight) { // If above ground
         requestAnimationFrame(display); // Tells the browser to smoothly render at 60Hz
         //sphere.rotation.x += 0.01;
-        ball.vy -= 9.8 / 50;
-        if (ball.vy > 10)
-            ball.vy /= 2.2;
+        ball.vy -= 9.8/20;
+        //console.log("y: "+ball.vy);
+        //console.log("x: "+ball.vx);
         sphere.rotation.z += 0.02;
-        sphere.position.x += ball.vx;
-        sphere.position.y += ball.vy;
+        sphere.position.x -= ball.vx;
+        sphere.position.y += ball.vy; //+x = to the right
         // Draw the scene from the perspective of the camera.
         renderer.render(scene, camera);
     } else {
+        sphere.position.y=groundHeight;
         cancelAnimationFrame(display);
         create();
     }
