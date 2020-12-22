@@ -29,8 +29,8 @@ function init(){
         new THREE.SphereGeometry(2, 10, 10), // width, height, depth
         new THREE.MeshBasicMaterial({color:0xff4444})
     );
-    sphere.position.set(10,2,0)
-    sphere.scale.set(0,0.1,0.1);
+    sphere.position.set(10,1.8,0)
+    sphere.scale.set(0.2,0.2,0);
     scene.add(sphere);
 
     //const groundTexture = new THREE.TextureLoader().load( './image/grasslight-big.jpg' );
@@ -58,21 +58,27 @@ function init(){
     // Puts the "canvas" into our HTML page.
     document.body.appendChild(renderer.domElement);
 
+    renderer.render(scene, camera);
     // Begin animation
-    display();
 }
 
 
 
 function display(){
-    requestAnimationFrame(display); // Tells the browser to smoothly render at 60Hz
+
 
     // Rotate our mesh.
-    //sphere.rotation.x += 0.01;
-    //sphere.rotation.y += 0.02;
-
+    if (sphere.position.y > -0.1) {
+        requestAnimationFrame(display); // Tells the browser to smoothly render at 60Hz
+        //sphere.rotation.x += 0.01;
+        sphere.rotation.z += 0.02;
+        sphere.position.x -= 0.1;
+        sphere.position.y -= 0.02;
+    } else {
+        sphere.position.x = 1;
+        sphere.position.y = 0;
+    }
     // Draw the scene from the perspective of the camera.
-
     renderer.render(scene, camera);
 }
 
@@ -80,11 +86,12 @@ function display(){
 window.onload = init;
 
 function maxHeight(){
-    var v0 = parseFloat(document.getElementById("v0").value);
-    var y0 = parseFloat(document.getElementById("y0").value);
-    var theta = parseFloat(document.getElementById("theta").value)*Math.PI/180;
+    var v0 = document.getElementById("v0").value;
+    var y0 = document.getElementById("y0").value;
+    var theta = document.getElementById("theta").value * Math.PI/180;
     var vy = Math.sin(theta) * v0;
     var t = vy / 9.8
-    var yf = y0 + vy * t + 1 / 2 * 9.8 * t * t;
-    alert("yf="+yf);
+    var yf = Number.parseFloat((y0 + vy * t + 1 / 2 * 9.8 * t * t)).toPrecision(4);
+    document.getElementById("yf").value = +yf;
+    //alert("yf="+yf);
 }
