@@ -8,13 +8,14 @@
 </head>
 <body>
     <form onsubmit="return false" style="position: absolute; left: 2%; top: 2%">
-        <label>Initial Velocity: <input id="v0" placeholder="V0" type="number" step="any"></label>
-        <label>Initial Height: <input id="y0" placeholder="y0" type="number" step="any"></label>
-        <label>Angle: <input id="theta" placeholder="theta" type="number" step="any"></label>
+        <label>Initial Velocity: <input id="v0" placeholder="V0  m/s" type="number" step="any"></label>
+        <label>Initial Height: <input id="y0" placeholder="y0 m/s" type="number" step="any"></label>
+        <label>Angle: <input id="theta" placeholder="theta in degree" type="number" step="any"></label>
         <button onclick="maxHeight(); display()" id="submit">Simulate</button>
         <br><br>
         <label>Maximum Height: <input id="ym" placeholder="Max Height" type="text" disabled></label>
         <label>Final Distance: <input id="xf" placeholder="Final X position" type="text" disabled></label>
+        <label>Total Flight time: <input id="tf" placeholder="in second" type="text" disabled></label>
     </form>
 
 </body>

@@ -86,12 +86,13 @@ function maxHeight(){
         console.log("vy: "+vy);
     var vx = Math.cos(theta) * v0; //calculate vx
     var t = vy / 9.8;
-    var tf =(-vy-Math.sqrt(vy*vy+2*9.8*y0))/-9.8;
+    var tf =Number.parseFloat((-vy-Math.sqrt(vy*vy+2*9.8*y0))/-9.8).toPrecision(4);
     console.log(Math.sqrt(9));
     var xf = Number.parseFloat((vx * tf + 1 / 2 * 9.8 * tf * tf)).toPrecision(4);
     var ym = Number.parseFloat(y0 + vy * t + 1 / 2 * 9.8 * t * t).toPrecision(4);
     document.getElementById("ym").value = ym;
     document.getElementById("xf").value = xf;
+    document.getElementById("tf").value = tf;
     vy/=2;
     vx/=2;
     if(vy>100){
