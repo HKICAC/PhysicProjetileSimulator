@@ -78,3 +78,13 @@ function display(){
 
 // When the page has loaded, run init();
 window.onload = init;
+
+function maxHeight(){
+    var v0 = parseFloat(document.getElementById("v0").value);
+    var y0 = parseFloat(document.getElementById("y0").value);
+    var theta = parseFloat(document.getElementById("theta").value)*Math.PI/180;
+    var vy = Math.sin(theta) * v0;
+    var t = vy / 9.8
+    var yf = y0 + vy * t + 1 / 2 * 9.8 * t * t;
+    alert("yf="+yf);
+}

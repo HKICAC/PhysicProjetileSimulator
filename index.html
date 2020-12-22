@@ -8,10 +8,10 @@
 </head>
 <body>
     <form id="form" style="position: absolute; left: 2%; top: 2%">
-        <label>Initial Velocity: <input type="number"></label>
-        <label>Initial Height: <input type="number"></label>
-        <label>Angle: <input type="number"></label>
-    <button type="submit">Simulate</button>
+        <label>Initial Velocity: <input id="v0" placeholder="V0" input type="number"></label>
+        <label>Initial Height: <input id="y0" placeholder="y0"type="number"></label>
+        <label>Angle: <input id="theta" placeholder="theta" type="number"></label>
+    <button onclick="maxHeight()" id="submit">Simulate</button>
     </form>
 </body>
 </html>
